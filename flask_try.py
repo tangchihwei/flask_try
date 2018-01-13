@@ -46,13 +46,14 @@ def app_task(messages):
 def anova_task(messages):
     print "Start anova"
     anova = AnovaController("88:4A:EA:15:5A:AB")
-    for message in messages:
-        if message["key"] is "TASK_ANOVA":
-            print "new cook order"
-            if message["key"]["event"] is "COOK_ORDER":
-                anova.set_time(message["key"]["payload"]["set_time"])
-                anova.set_temp(message["key"]["payload"]["target_temp"])
-    time.sleep(1)
+    while True:
+        for message in messages:
+            if message["key"] is "TASK_ANOVA":
+                print "new cook order"
+                if message["key"]["event"] is "COOK_ORDER":
+                    anova.set_time(message["key"]["payload"]["set_time"])
+                    anova.set_temp(message["key"]["payload"]["target_temp"])
+        time.sleep(1)
 
 def main():
     # print "temp: " + str(app.anova.read_temp())
