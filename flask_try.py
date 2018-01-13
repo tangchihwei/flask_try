@@ -54,9 +54,9 @@ def anova_task(messages):
             print message["key"]
             if message["key"] == "TASK_ANOVA":
                 print "new cook order"
-                if message["key"]["event"] == "COOK_ORDER":
-                    anova.set_time(message["key"]["payload"]["set_time"])
-                    anova.set_temp(message["key"]["payload"]["target_temp"])
+                if message["event"] == "COOK_ORDER":
+                    anova.set_time(message["payload"]["set_time"])
+                    anova.set_temp(message["payload"]["target_temp"])
         time.sleep(1)
 
 def main():
