@@ -32,7 +32,7 @@ def control():
         "event" : "COOK_ORDER",
         "payload" : {
             "target_temp" : float(request.form['target_temp']),
-            "set_time" : str(request.form['set_time']
+            "set_time" : str(request.form['set_time'])
         }
     }
     app.messages.append(message)
@@ -48,6 +48,7 @@ def anova_task(messages):
     anova = AnovaController("88:4A:EA:15:5A:AB")
     for message in messages:
         if message["key"] is "TASK_ANOVA":
+            print "new cook order"
             if message["key"]["event"] is "COOK_ORDER":
                 anova.set_time(message["key"]["payload"]["set_time"])
                 anova.set_temp(message["key"]["payload"]["target_temp"])
