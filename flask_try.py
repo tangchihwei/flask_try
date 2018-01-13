@@ -49,7 +49,9 @@ def anova_task(messages):
     while True:
         for message in messages:
             print "in anova task message queue"
-            print app.messages.pop()
+            print messages.pop()
+            print "message key is: "
+            print messages["key"]
             if message["key"] is "TASK_ANOVA":
                 print "new cook order"
                 if message["key"]["event"] is "COOK_ORDER":
