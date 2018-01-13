@@ -26,7 +26,16 @@ def control():
     print "Cooking Time: "+ request.form['set_time']
     for message in app.messages:
         print app.messages.pop()
-    # print "temp: "+ str(app.anova.read_temp())
+    message = {
+        "key" : "TASK_ANOVA",
+        "timestamp" : "12:50",
+        "event" : "COOK_ORDER",
+        "payload" : {
+            "target_temp" : float(request.form['target_temp']),
+            "set_time" : str(request.form['set_time']
+        }
+    }
+    app.messages.append(message)
     return render_template('form.html')
 
 def app_task(messages):
@@ -37,10 +46,12 @@ def app_task(messages):
 def anova_task(messages):
     print "Start anova"
     anova = AnovaController("88:4A:EA:15:5A:AB")
-    while True:
-        print "in anova task"
-        messages.append ("temp: "+ str(anova.read_temp()))
-        time.sleep(3)
+    for message in messages:
+        if message["key"] is "TASK_ANOVA":
+            if message["key"]["event"] is "COOK_ORDER":
+                anova.set_time(message["key"]["payload"]["set_time"])
+                anova.set_temp(message["key"]["payload"]["target_temp"])
+    time.sleep(1)
 
 def main():
     # print "temp: " + str(app.anova.read_temp())
