@@ -24,8 +24,8 @@ def submit():
 def control():
     print "Cooking Temperature: "+ request.form['target_temp']
     print "Cooking Time: "+ request.form['set_time']
-    for message in app.messages:
-        print app.messages.pop()
+    # for message in app.messages:
+    #     print app.messages.pop()
     message = {
         "key" : "TASK_ANOVA",
         "timestamp" : "12:50",
@@ -48,6 +48,8 @@ def anova_task(messages):
     anova = AnovaController("88:4A:EA:15:5A:AB")
     while True:
         for message in messages:
+            print "in anova task message queue"
+            print app.messages.pop()
             if message["key"] is "TASK_ANOVA":
                 print "new cook order"
                 if message["key"]["event"] is "COOK_ORDER":
